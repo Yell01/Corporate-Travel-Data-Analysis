@@ -1,6 +1,6 @@
 # Project_101
 
-**Travel Dataset – Exploratory Data Analysis**
+**Travel Dataset**
 
 Source: Datasets from kaggle
 
