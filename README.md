@@ -15,6 +15,7 @@ The dataset consists of three tables — Users, Hotels, and Flights — covering
 **Flights:** 271,888 rows; 10 columns (travelCode, userCode, travelFrom, travelTo, flightType, price, time, distance, agency, date)
 
 
+
 **Key Findings:**
 
 1.) **User Demographics:** Employees from 4You account for 33.81% of the total user base.
