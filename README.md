@@ -7,8 +7,11 @@
 
 **Description:** 
 The dataset consists of three tables — Users, Hotels, and Flights — covering the years 2019 to 2023.
+
 **Users:** 1,340 rows; 5 columns (code, company, name, gender, age)
+
 **Hotels:** 40,552 rows; 8 columns (travelCode, userCode, name, place, days, price, total, date)
+
 **Flights:** 271,888 rows; 10 columns (travelCode, userCode, travelFrom, travelTo, flightType, price, time, distance, agency, date)
 
 
