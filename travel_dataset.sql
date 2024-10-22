@@ -1,6 +1,6 @@
 USE travel;
 
-/* Create table hotels, can't use data table import due to file size*/
+/* Create table hotels*/
 /* Create table structure*/
 
 CREATE TABLE hotels
@@ -24,7 +24,7 @@ FIELDS TERMINATED BY ','
 IGNORE 1 LINES;
 
 
-/* Create table flights, can't use data table import due to file size*/
+/* Create table flights*/
 /* Create table structure*/
 
 CREATE TABLE flights
