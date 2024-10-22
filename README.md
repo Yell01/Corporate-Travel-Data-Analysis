@@ -12,7 +12,7 @@ The dataset consists of three tables — Users, Hotels, and Flights — covering
 
 **Hotels:** 40,552 rows; 8 columns (travelCode, userCode, name, place, days, price, total, date)
 
-**Flights:** 271,888 rows; 10 columns (travelCode, userCode, travelFrom, travelTo, flightType, price, time, distance, agency, date)
+**Flights:** 271,888 rows; 10 columns (travelCode, userCode, from, to, flightType, price, time, distance, agency, date)
 
 
 
