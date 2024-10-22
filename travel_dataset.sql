@@ -51,7 +51,7 @@ IGNORE 1 LINES;
 
 /*Explore users table*/
 
-SELECT company, COUNT(company) AS totalUsers
+SELECT company, COUNT(code) AS totalUsers
 FROM users
 GROUP BY company
 ORDER BY totalUsers DESC;
@@ -59,7 +59,7 @@ ORDER BY totalUsers DESC;
 
 /*Explore hotels table*/
 
-SELECT COUNT(DISTINCT travelCode)
+SELECT COUNT(name) AS hotel_name
  FROM travel.hotels;
 
 
