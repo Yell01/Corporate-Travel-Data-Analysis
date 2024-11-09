@@ -1,219 +1,172 @@
-USE travel;
 
-/* Create table hotels*/
-/* Create table structure*/
+/*SQL Server*/
 
-CREATE TABLE hotels
-(
-travelCode INT,
-userCode INT,
-name VARCHAR(200),
-place VARCHAR(200),
-days INT,
-price DOUBLE,
-total DOUBLE,
-date DATE);
+USE TravelDataset;
 
+/*Exploring users table*/
 SELECT *
-FROM hotels;
-
-/*Load data*/
-
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/hotels.csv' INTO TABLE hotels
-FIELDS TERMINATED BY ','
-IGNORE 1 LINES;
+FROM users;
 
 
-/* Create table flights*/
-/* Create table structure*/
+/*Checking total number of users*/
+SELECT COUNT(*) AS totalUser
+FROM users;
 
-CREATE TABLE flights
-(
-travelCode INT,
-userCode INT,
-travelFrom VARCHAR(200),
-travelTo VARCHAR(200),
-flightType VARCHAR(200),
-price DOUBLE,
-time DOUBLE,
-distance DOUBLE,
-agency VARCHAR(200),
-date DATE);
 
+/*Total number of users per company*/
+SELECT company,
+	COUNT(*) AS totalUser
+FROM users
+GROUP BY company
+ORDER BY totalUser DESC;
+
+
+/*Check distribution of users by gender*/
+SELECT 
+	gender,
+	COUNT(*) AS totalUser
+FROM users
+GROUP BY gender 
+ORDER BY totalUser DESC;
+
+
+/*Calculate the minimum, average, and maximum age of users */
+SELECT 
+	MIN(age) AS minAge,
+	AVG(age) AS avgAge,
+	MAX(age) AS maxAge
+FROM users;
+
+
+/*Count users grouped by age range*/
+SELECT 
+	ageGroup,
+	COUNT(*) AS totalUser
+FROM (
+	SELECT
+		CASE
+		WHEN age BETWEEN 20 AND 29 THEN '20s'
+		WHEN age BETWEEN 30 AND 39 THEN '30s'
+		WHEN age BETWEEN 40 AND 49 THEN '40s'
+		WHEN age BETWEEN 50 AND 59 THEN '50s'
+		WHEN age >= 60 THEN '60s and above'
+	END AS ageGroup
+	FROM users) AS ageGroup
+GROUP BY ageGroup
+ORDER BY ageGroup;
+
+
+/*Exploring flights table*/
 SELECT *
 FROM flights;
 
-/*Load data*/
 
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/flights.csv' INTO TABLE flights
-FIELDS TERMINATED BY ','
-IGNORE 1 LINES;
+/*Check whether each booked flight is a round-trip booking*/
+SELECT 
+	COUNT(travelCode) AS totalFlight,
+	COUNT(DISTINCT travelCode) AS totalDistinctFlight
+FROM flights;
 
-/*Explore users table*/
 
-SELECT company, COUNT(code) AS totalUsers
-FROM users
+/*Identify the agency with the highest number of flights*/
+SELECT 
+	agency,
+	count(*) AS totalFlights
+FROM flights
+GROUP BY agency
+ORDER BY totalFlights DESC;
+
+
+/*total flights per User*/
+SELECT 
+	name,
+	company,
+	COUNT(*) AS totalFlights
+FROM flights
+	JOIN users
+		ON flights.userCode = users.code
+GROUP BY name, company
+ORDER BY totalFlights DESC;
+
+
+/*total flights per company*/
+SELECT 
+	company,
+	COUNT(*) AS totalFlights
+FROM flights
+	JOIN users
+		ON flights.userCode = users.code
 GROUP BY company
-ORDER BY totalUsers DESC;
-
-
-/*Explore hotels table*/
-
-SELECT COUNT(name) AS hotel_name
- FROM travel.hotels;
-
-
-/*Explore flights table*/
-
-SELECT COUNT(DISTINCT travelCode)
- FROM travel.flights;
-
-
-/*totalFlights per User*/
-
-SELECT 
-	users.name,
-	users.company,
-	COUNT(userCode) AS totalFlights
-FROM flights
-	JOIN users
-		ON flights.userCode = users.code
-GROUP BY users.name, users.company
 ORDER BY totalFlights DESC;
 
 
-/*total flights per Company*/
+/*Determine the flight type with the highest booking count*/
 SELECT 
-	users.company,
-	COUNT(userCode) AS totalFlights
+	flightType,
+	COUNT(*) AS totalFlights
 FROM flights
-	JOIN users
-		ON flights.userCode = users.code
-GROUP BY users.company
+GROUP BY flightType
 ORDER BY totalFlights DESC;
 
 
 
-/*Joins*/
-
-SELECT users.name, 
-		users.company,
-		hotels.name,
-        hotels.days,
-        hotels.price,
-        hotels.total,
-        hotels.date
-FROM travel.hotels
-    JOIN travel.users
-		ON hotels.userCode = users.code;
-        
-        
-/*Check total hotel expenses per company*/
-
-SELECT users.company,
-        CONCAT('$', FORMAT(SUM(hotels.total), 2)) AS totalExpenses
-FROM travel.hotels
-    JOIN travel.users
-		ON hotels.userCode = users.code
-GROUP BY users.company
-ORDER BY SUM(hotels.total) DESC;
+/*Exploring hotels table*/
+SELECT *
+FROM hotels;
 
 
-/*Check total hotel expenses per company and per user*/
+/*List of hotels booked by users */
+SELECT COUNT(DISTINCT name) AS hotelNames
+FROM hotels;
 
-SELECT users.name,
-		users.company,
-        CONCAT('$',FORMAT(SUM(hotels.total),2)) AS totalExpenses
-FROM travel.hotels
-    JOIN travel.users
-		ON hotels.userCode = users.code
-GROUP BY users.company, users.name
-HAVING company = 'Wonka Company'
-ORDER BY SUM(hotels.total) DESC;
+
+/*Identify the most frequently booked hotels*/
+SELECT
+	name,
+	COUNT(*) AS totalBooking
+FROM hotels
+GROUP BY name
+ORDER BY totalBooking DESC;
 
 
 
-
-/*Check total Expenses (hotel+flight) per User*/
-
+/*Identify the most frequently booked hotels per Year*/
 SELECT 
-	users.name,
-	users.company,
-	CONCAT('$',FORMAT(SUM(hotels.total),2)) AS hotelExpenses,
-	CONCAT('$',FORMAT(SUM(flights.price),2)) AS transpoExpenses,
-    CONCAT('$',FORMAT(SUM(hotels.total) + SUM(flights.price),2)) AS travelExpenses
-FROM travel.users
-	JOIN travel.hotels
-		ON users.code = hotels.userCode
-	JOIN travel.flights
-		ON hotels.travelCode=flights.travelCode
-GROUP BY users.company, users.name
-ORDER BY SUM(hotels.total) + SUM(flights.price) DESC;
-
-
-/*Check total Expenses (hotel+flight) per Company*/
-
-SELECT 
-	users.company,
-	CONCAT('$',FORMAT(SUM(hotels.total),2)) AS hotelExpenses,
-	CONCAT('$',FORMAT(SUM(flights.price),2)) AS transpoExpenses,
-    CONCAT('$',FORMAT(SUM(hotels.total) + SUM(flights.price),2)) AS travelExpenses
-FROM travel.users
-	JOIN travel.hotels
-		ON users.code = hotels.userCode
-	JOIN travel.flights
-		ON hotels.travelCode=flights.travelCode
-GROUP BY users.company
-ORDER BY SUM(hotels.total) + SUM(flights.price) DESC;
-
-
-/*Check total Expenses (hotel+flight) per Year, per Company*/
-
-SELECT 
-	users.company,
-    YEAR(hotels.date) AS year,
-	CONCAT('$',FORMAT(SUM(hotels.total),2)) AS hotelExpenses,
-	CONCAT('$',FORMAT(SUM(flights.price),2)) AS transpoExpenses,
-    CONCAT('$',FORMAT(SUM(hotels.total) + SUM(flights.price),2)) AS travelExpenses
-FROM travel.users
-	JOIN travel.hotels
-		ON users.code = hotels.userCode
-	JOIN travel.flights
-		ON hotels.travelCode=flights.travelCode
-GROUP BY year, users.company
-ORDER BY year, SUM(hotels.total) + SUM(flights.price) DESC;
+        year,
+	name,
+	totalBooking
+FROM 
+	(SELECT 
+        	name,
+       		COUNT(*) AS totalBooking,
+        	YEAR(date) AS year,
+        	ROW_NUMBER() OVER (PARTITION BY YEAR(date) ORDER BY COUNT(*) DESC) AS rank
+    	FROM hotels
+   	GROUP BY 
+        	name, 
+        	YEAR(date)
+	) AS hotelRank
+WHERE rank <= 3
+ORDER BY 
+    year DESC,
+    rank;
 
 
 /*Finding cheapest hotel*/
 SELECT DISTINCT
 	name,
-    price
-FROM travel.hotels
+    	price
+FROM hotels
 ORDER BY price;
-
-
-/*Finding the cheapest travel fare*/
-
-SELECT
-	agency,
-	flightType,
-    distance,
-    price
-FROM travel.flights
-GROUP BY distance, flightType, agency, price
-HAVING flightType = 'firstClass'
-ORDER BY distance, price;
 
 
 
 /*Checking the year with the highest hotel bookings*/
-
 SELECT
-	YEAR(hotels.date) AS year,
-    COUNT(travelCode) AS totalBookings
-FROM travel.hotels
-GROUP BY year
+	YEAR(date) AS year,
+   	COUNT(travelCode) AS totalBookings
+FROM hotels
+GROUP BY YEAR(date)
 ORDER BY totalBookings DESC;
-
 
 
