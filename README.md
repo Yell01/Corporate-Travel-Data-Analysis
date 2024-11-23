@@ -2,8 +2,7 @@
 
 **Source:** Datasets from kaggle
 
-**Context:** Argo Solutions - A leading technology company in Latin America, developing solutions to facilitate expense management and corporate travel using technology as an enabler of these processes. Using SQL, we explore user demographics, travel trends, and booking behaviors from 2019 to 2023 to uncover insights that could improve corporate travel management
-
+**Context:** Argo Solutions - A leading technology company in Latin America, developing solutions to facilitate expense management and corporate travel using technology as an enabler of these processes. Using SQL, we explore user demographics, travel trends, and booking behaviors from 2019 to 2023 to uncover insights that could help Argo Solutions enhance its services and optimize corporate travel solutions.
 
 **Description:** 
 The dataset consists of three tables — Users, Hotels, and Flights — covering the years 2019 to 2023.
@@ -18,32 +17,65 @@ The dataset consists of three tables — Users, Hotels, and Flights — covering
 
 **Key Findings:**
 
-1.) **User Demographics:** Employees from 4You account for 33.81% of the total user base.
+**User Table Findings:**  User Table has the following columns - code, company, name, gender, age.
 
-**Implication:** "4You" represents a significant portion of the user base, making it a key revenue source and an important client for retention efforts.
+1. **Finding:** There are 1,340 users of the app.
+   
+**Implication:** The user base is relatively small, indicating either a highly targeted audience or potential room for growth.
 
-**Suggestion:** Develop customized reports, offer tailored features, or provide dedicated support to strengthen the partnership with "4You" and ensure continued business.
+**Consideration:** Argo Solutions could explore opportunities to expand its user base, possibly through partnerships, promotions, or targeted outreach.
 
-2.) **Booking Gaps:** Some flights have been booked without corresponding hotel bookings.
 
-**Implication:** This may indicates that not all travel requires hotel stays, potentially reflecting a trend toward short business trips (day trips) or the use of other lodging arrangements.
+2. **Finding:** The company 4You has the most users with 453 accounts. It  accounted for 33.81% of the total user base.
 
-**Suggestion:** Implement a feature that recommends hotel bookings during the flight booking process to increase hotel reservation rates and enhance user convenience.
+**Implication:** 4You is the platform's most significant client, representing a substantial portion of the user base.
 
-3.) **Hotel Pricing:** Hotel BW offers the lowest daily rate ($60.39), while Hotel A has the highest ($313.02).
+**Consideration:** Argo Solutions could consider developing tailored features or providing exclusive insights for 4You to enhance engagement and retain this client.
 
-**Implication:** The variation in hotel rates indicates potential for significant cost savings depending on the choice of accommodation. Higher rates may not always be needed, depending on the travel purpose.
 
-**Suggestion:** Companies could implement cost-control measures by setting limits on hotel expenditures. Argo Solutions could also negotiate special rates with frequently booked hotels to provide clients with better deals.
+3. **Finding:** Most users are in their 30s and 40s.
+   
+**Implication:** The platform is primarily used by mid-career professionals, likely in managerial or senior roles.
 
-4.) **Flight Options:** CloudFy and Rainbow Agencies offer both "economic" and "premium" options. Flying Drops exclusively offers "first class" flights.
+**Consideration:** Argo could explore features that cater to this demographic, such as simplifying travel planning for professionals with tools to manage frequent travel schedules or providing personalized travel recommendations aligned with company policies.
 
-**Implication:** The variety in service tiers offered by agencies suggests that companies can cater to different employee travel needs, from budget-friendly to luxury options.
 
-**Suggestion:** Argo Solutions can highlight agencies that offer multiple service tiers as versatile choices for clients. This can help companies align their travel bookings with employee preferences or corporate travel policies.
 
-5.) **Yearly Trends:** Excluding 2023 due to incomplete data, 2020 saw the highest number of hotel bookings, while 2019 had the fewest.
+**Flights Table Findings:** Flights table consists of the following columns -  travelCode, userCode, from, to, flightType, price, time, distance, agency date
 
-**Implication:** This suggests fluctuations in corporate travel activity, possibly influenced by external factors.
+1. **Finding:** All of the booked flights are round-trip bookings.
+   
+**Implication:** Since all flights are round-trip, it suggests that users are likely booking business trips with fixed schedules. This could imply a preference for efficiency and cost-effective travel arrangements.
 
-**Suggestion:** Use historical booking data to forecast future travel demands and provide clients with budgeting strategies for peak travel periods. Argo Solutions can also use these insights to anticipate service demands.
+**Consideration:** Argo could consider offering pre-packaged round-trip travel options that include both flights and hotels, potentially streamlining the booking process for users and making it more convenient for companies managing travel.
+
+
+2. **Finding:** Most users opted for first class, followed by premium and economy.
+
+**Implication:** Users’ tendency to book higher-class flights, like first-class and premium, suggests an opportunity for Argo to better understand user preferences for comfort during business travel.
+
+**Consideration:** Argo could improve its flight booking options by providing customized travel choices based on employee roles, travel purpose, or corporate budget, making it easier for companies to manage both comfort and cost.
+
+
+
+**Hotels Table Findings:**  Hotels table consists of the following columns -  travelCode, userCode, name, place, days, price, total, date
+
+1. **Finding:** There are nine (9) distinct hotels users chose.
+
+**Implication:** A limited number of hotels are consistently booked, potentially indicating user loyalty or limited choices on the platform.
+
+**Consideration:** Argo could explore expanding the selection of hotels available on its platform, offering users more choices.
+
+
+2. **Finding:** Hotel K was the most preferred hotel to book.
+
+**Implication:** Hotel K is generally favored by users, suggesting it may be a popular and trusted option for most business trips.
+
+**Consideration:** Argo could ensure that Hotel K remains easily accessible and visible in its platform’s recommendations, making it a preferred choice for users. They could also explore providing additional features, like preferred booking options for users who frequently choose Hotel K.
+
+
+3. **Finding:** Hotel BW was the cheapest hotel.
+
+**Implication:** Hotel BW offers a cost-effective option for budget-conscious travelers.
+
+**Consideration:** Argo could enhance the platform by allowing companies to easily identify cost-effective options like Hotel BW based on their travel preferences and budget. This feature could help companies make informed decisions when managing their travel expenses.
